@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Government Super Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- 1. ROOT VARIABLES & GLOBAL RESET --- */
+        :root {
+            --color-crimson: #DC143C; /* Primary Action & Highlight */
+            --color-blue: #003893;     /* Header, Footer & Accents */
+            --color-white: #FFFFFF;    /* Text on color, Card backgrounds */
+            --color-bg-light: #F8F9FA; /* Main page background */
+            --color-text-dark: #212529;/* Body text */
+            --color-text-light: #6c757d;/* Subtle text */
+            --color-border: #e9ecef;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.12);
+            --border-radius-sm: 5px;
+            --border-radius-md: 10px;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1366px; /* Slightly wider for more elements */
+            margin: 0 auto;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--color-blue);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2.section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        h2.section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-crimson);
+            border-radius: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-crimson);
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--color-blue);
+        }
+
+        /* --- Custom Scrollbar (Modern Touch) --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-blue);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-crimson);
+        }
+
+        /* --- 2. HEADER & NAVIGATION --- */
+        .main-header {
+            background-color: var(--color-blue);
+            color: var(--color-white);
+            padding: 0.8rem 0;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--color-crimson);
+        }
+        
+        .logo span {
+            color: var(--color-crimson); /* Crimson accent */
+            margin-left: 5px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav li {
+            margin-left: 1.8rem;
+        }
+
+        .main-nav a {
+            color: var(--color-white);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            border-bottom-color: var(--color-crimson);
+            color: var(--color-crimson);
+        }
+        
+        .auth-buttons {
+            display: flex; /* Ensure buttons are side-by-side */
+        }
+        .auth-buttons .btn {
+            margin-left: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.4rem;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--color-crimson);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background-color: #A30F2D; /* Darker crimson */
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--color-crimson);
+            color: var(--color-crimson);
+        }
+        
+        .btn-outline:hover {
+            background: var(--color-crimson);
+            color: var(--color-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .auth-buttons .btn-outline {
+            border: 2px solid var(--color-white);
+            color: var(--color-white);
+        }
+        .auth-buttons .btn-outline:hover {
+            background: var(--color-white);
+            color: var(--color-blue);
+        }
+
+        .mobile-nav-toggle {
+            display: none; /* Hidden on desktop */
+            font-size: 2rem;
+            color: var(--color-white);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* --- 3. ANNOUNCEMENT BAR --- */
+        .announcement-bar {
+            background-color: var(--color-crimson);
+            color: var(--color-white);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .announcement-bar .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-label {
+            background-color: var(--color-blue);
+            padding: 0 15px;
+            font-weight: 600;
+            flex-shrink: 0;
+            height: 100%;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .ticker-label i {
+            margin-right: 8px;
+        }
+        
+        .ticker-wrap {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .ticker-items {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll-left 50s linear infinite; /* Adjusted speed */
+            padding-left: 20px; /* Initial offset */
+        }
+
+        .ticker-items:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            margin-right: 60px; /* Space between announcements */
+            padding: 0 5px;
+        }
+        
+        .ticker-item a {
+            color: var(--color-white);
+            text-decoration: none;
+        }
+        .ticker-item a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-200%); } /* Ensure continuous loop */
+        }
+
+
+        /* --- 4. HERO SECTION (WITH MAP) --- */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 56, 147, 0.95), rgba(0, 56, 147, 0.8)), var(--color-blue);
+            color: var(--color-white);
+            padding: 5rem 0 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid var(--color-crimson);
+        }
+
+        .hero .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: var(--color-white);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .hero h1 span {
+            color: var(--color-crimson);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--border-radius-md);
+            background-color: var(--color-white);
+        }
+
+        .search-bar input[type="text"] {
+            flex-grow: 1;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+            outline: none;
+            color: var(--color-text-dark);
+        }
+
+        .search-bar .btn-primary {
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+        }
+        
+        .map-container {
+            width: 100%;
+            max-width: 900px;
+            height: 350px; /* Aspect ratio for the map */
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius-md);
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .map-container::before {
+            content: 'Interactive Map of Nepal (Placeholder)';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        /* Simulated Nepal map graphic */
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/c/c2/Nepal_districts_2017.svg') no-repeat center center;
+            background-size: contain;
+            opacity: 0.2; /* Subtle background visual */
+            filter: grayscale(100%) brightness(150%);
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+
+        /* --- 5. KEY STATS / QUICK ACCESS --- */
+        .key-stats {
+            background-color: var(--color-white);
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .stat-item {
+            background-color: var(--color-bg-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 3px solid var(--color-crimson);
+            transition: all 0.3s ease;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--color-blue);
+            margin-bottom: 0.5rem;
+        }
+        .stat-item p {
+            font-size: 1rem;
+            color: var(--color-text-light);
+            font-weight: 500;
+        }
+
+
+        /* --- 6. FEATURED SERVICES --- */
+        .services {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .service-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            border-top: 5px solid var(--color-blue);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-top-color: var(--color-crimson);
+        }
+        
+        .service-card:hover .card-link i {
+            transform: translateX(5px);
+        }
+
+        .service-card .icon {
+            font-size: 3.5rem;
+            color: var(--color-crimson);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-blue);
+        }
+
+        .service-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1; /* Makes p fill space */
+        }
+        
+        .service-card .card-link {
+            font-weight: 600;
+            color: var(--color-crimson);
+            display: inline-flex;
+            align-items: center;
+            margin-top: auto; /* Pushes link to bottom */
+        }
+        .service-card .card-link i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- 7. MAIN CONTENT (NEWS & QUICK LINKS) --- */
+        .main-content-area {
+            padding: 4rem 0;
+            background-color: var(--color-white); /* White background for this whole section */
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .main-content-area .container {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr; /* News slightly wider */
+            gap: 2.5rem;
+        }
+
+        .news-feed {
+            background: transparent; /* No inner bg needed */
+            padding: 0;
+            box-shadow: none;
+        }
+        
+        .news-feed .section-title {
+            text-align: left;
+            margin-left: 0;
+            transform: none;
+            width: auto;
+            margin-bottom: 2rem;
+        }
+        .news-feed .section-title::after {
+            left: 0;
+            transform: none;
+        }
+
+
+        .news-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px dashed var(--color-border);
+            align-items: flex-start;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .news-date {
+            background: var(--color-blue);
+            color: var(--color-white);
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+            padding: 0.7rem;
+            height: fit-content;
+            flex-shrink: 0;
+            width: 80px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .news-date span {
+            display: block;
+        }
+        .news-date .day {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .news-date .month {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .news-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-content p {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.75rem;
+        }
+        
+        .news-content .read-more {
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-block;
+            color: var(--color-blue);
+        }
+        .news-content .read-more:hover {
+            color: var(--color-crimson);
+        }
+
+        .sidebar-widget {
+            background: var(--color-bg-light); /* Light bg for sidebar widgets */
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--color-border);
+        }
+        
+        .sidebar-widget h3 {
+            font-size: 1.5rem;
+            border-bottom: 3px solid var(--color-crimson);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-widget ul {
+            list-style: none;
+        }
+        
+        .sidebar-widget li {
+            margin-bottom: 1.2rem;
+        }
+        
+        .sidebar-widget a {
+            font-weight: 500;
+            color: var(--color-text-dark);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-widget a i {
+            color: var(--color-crimson);
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 20px; /* Align icons */
+        }
+        
+        .sidebar-widget a:hover {
+            color: var(--color-crimson);
+            transform: translateX(8px);
+        }
+
+        /* --- 8. CALL TO ACTION / FEEDBACK --- */
+        .cta-section {
+            background-color: var(--color-blue);
+            color: var(--color-white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .cta-section h2 {
+            color: var(--color-white);
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        .cta-buttons .btn {
+            margin: 0;
+        }
+        .cta-buttons .btn-outline {
+            border-color: var(--color-white);
+            color: var(--color-white);
+        }
+        .cta-buttons .btn-outline:hover {
+            background: var(--color-white);
+            color: var(--color-blue);
+        }
+
+
+        /* --- 9. FOOTER --- */
+        .main-footer {
+            background-color: var(--color-blue);
+            color: var(--color-white);
+            padding: 4rem 0 2rem;
+            margin-top: 0; /* Integrated after CTA */
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-widget h4 {
+            color: var(--color-white);
+            font-family: var(--font-body); /* Change footer heading font */
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--color-crimson);
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-widget ul {
+            list-style: none;
+        }
+
+        .footer-widget li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-widget a {
+            color: #d8d8d8;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-widget a i {
+            margin-right: 8px;
+            font-size: 1rem;
+            color: var(--color-crimson);
+            width: 20px; /* Align icons */
+        }
+
+        .footer-widget a:hover {
+            color: var(--color-white);
+            padding-left: 5px;
+            transform: translateX(0); /* Override default a:hover transform */
+        }
+        
+        .footer-widget p {
+             color: #d8d8d8;
+             font-size: 0.95rem;
+        }
+        .footer-widget .contact-info p {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .footer-widget .contact-info i {
+            margin-right: 8px;
+            color: var(--color-crimson);
+            margin-top: 5px;
+            width: 20px;
+        }
+        .social-links a {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: var(--color-white);
+        }
+        .social-links a:hover {
+            color: var(--color-crimson);
+            transform: translateY(-3px);
+        }
+
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            color: #d8d8d8;
+        }
+
+        /* --- 10. RESPONSIVE (MOBILE-FIRST) --- */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .main-content-area .container {
+                grid-template-columns: 1fr; /* Stack news and sidebar */
+            }
+            h2.section-title {
+                font-size: 2rem;
+            }
+            h2.section-title::after {
+                width: 60px;
+            }
+            .news-feed .section-title::after {
+                left: 0;
+                transform: none;
+            }
+            .sidebar-widget h3 {
+                font-size: 1.3rem;
+            }
+            .auth-buttons {
+                display: none; /* Hide login/register on header for mobile */
+            }
+            .mobile-nav-toggle {
+                display: block; /* Show hamburger icon */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-header .container {
+                padding: 0 20px;
+            }
+            .logo {
+                font-size: 1.4rem;
+            }
+            .main-nav {
+                display: none; /* Hide nav on mobile */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-blue);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: var(--shadow-md);
+            }
+            
+            .main-nav.active {
+                display: flex; /* Show nav when active */
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .main-nav li {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+            .main-nav a {
+                padding: 0.8rem 0;
+                display: block;
+            }
+            .auth-buttons-mobile {
+                display: block !important;
+                margin-top: 1.5rem;
+                padding: 0 2rem;
+            }
+            .auth-buttons-mobile .btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .hero {
+                padding: 4rem 0 2rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .search-bar {
+                flex-direction: column;
+                border-radius: var(--border-radius-md);
+            }
+            .search-bar input[type="text"] {
+                border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            .search-bar .btn-primary {
+                border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            .map-container {
+                height: 250px;
+                margin-top: 1.5rem;
+            }
+            .map-container::before {
+                font-size: 1.2rem;
+            }
+            
+            .key-stats, .services, .main-content-area, .cta-section, .main-footer {
+                padding: 2.5rem 0;
+            }
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            .stats-grid, .services-grid, .footer-grid {
+                gap: 1.5rem;
+            }
+            .news-item {
+                flex-direction: column;
+                gap: 1rem;
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .news-date {
+                width: 70px;
+                padding: 0.5rem;
+            }
+            .news-date .day { font-size: 1.5rem; }
+            .news-date .month { font-size: 0.8rem; }
+            .cta-buttons {
+                flex-direction: column;
+            }
+            .cta-buttons .btn {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .search-bar {
+                max-width: 95%;
+            }
+            .map-container {
+                height: 200px;
+            }
+            .stat-item h3 {
+                font-size: 2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-mountain"></i>Nepal <span>Portal</span>
+            </a>
+            
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#news">News & Events</a></li>
+                    <li><a href="#">Ministries</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="auth-buttons-mobile" style="display: none;">
+                    <a href="#" class="btn btn-primary">Login</a>
+                    <a href="#" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white);">Register</a>
+                </div>
+            </nav>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-primary">Login</a>
+                <a href="#" class="btn btn-outline">Register</a>
+            </div>
+
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="announcement-bar">
+        <div class="container">
+            <div class="ticker-label"><i class="fas fa-bullhorn"></i> LATEST</div>
+            <div class="ticker-wrap">
+                <div class="ticker-items">
+                    <span class="ticker-item"><a href="#">⚡ **New Policy:** National Identity Card deadline extended to Poush 15.</a></span>
+                    <span class="ticker-item"><a href="#">🔔 **Tender Alert:** Bidding open for Kathmandu-Terai Fast Track project.</a></span>
+                    <span class="ticker-item"><a href="#">⚠️ **Important:** Public Holiday declared for Magh 1st, 2082.</a></span>
+                    <span class="ticker-item"><a href="#">📈 **Data Release:** Economic Survey 2082/83 reports now available.</a></span>
+                    <span class="ticker-item"><a href="#">⚡ **New Policy:** National Identity Card deadline extended to Poush 15.</a></span>
+                    <span class="ticker-item"><a href="#">🔔 **Tender Alert:** Bidding open for Kathmandu-Terai Fast Track project.</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Nepal Government <span>Super Portal</span></h1>
+                <p>Your single, unified gateway for all government services, information, and citizen engagement. How can we help you today?</p>
+                <form class="search-bar" role="search">
+                    <input type="text" placeholder="Search for 'Passport', 'Tax Filing', 'Vehicle Registration'...">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                </form>
+            </div>
+            
+            <div class="map-container" title="Interactive Map of Nepal Services">
+                <div class="map-placeholder"></div>
+                </div>
+        </div>
+    </section>
+
+    <section class="key-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>753</h3>
+                    <p>Local Governments</p>
+                </div>
+                <div class="stat-item">
+                    <h3>125</h3>
+                    <p>Services Online</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1.2M+</h3>
+                    <p>Registered Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>45</h3>
+                    <p>Ministries & Depts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Citizen Services</h2>
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-passport"></i></div>
+                    <h3>Passport & Travel</h3>
+                    <p>Apply for a new passport, renew an existing one, or manage international travel documents.</p>
+                    <a href="#" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-landmark"></i></div>
+                    <h3>Tax & Revenue</h3>
+                    <p>File your personal and business taxes, check your dues, and get your tax clearance certificate.</p>
+                    <a href="#" class="card-link">File Your Tax <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Registrations</h3>
+                    <p>Access services for birth/death certificates, business registration, and land records (Malpot).</p>
+                    <a href="#" class="card-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-car"></i></div>
+                    <h3>Transport & Vehicles</h3>
+                    <p>Renew your driver's license (Bluebook), pay vehicle tax, and check traffic violations.</p>
+                    <a href="#" class="card-link">Manage Vehicles <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content-area" id="news">
+        <div class="container">
+            
+            <main class="news-feed">
+                <h2 class="section-title">News & Announcements</h2>
+                
+                <article class="news-item">
+                    <div class="news-date">
+                        <span class="day">17</span>
+                        <span class="month">NOV</span>
+                    </div>
+                    <div class="news-content">
+                        <h4><a href="#">National E-Governance Strategy 2025 Launched</a></h4>
+                        <p>The government unveiled a new 5-year plan to digitize all public services, aiming for 90% digital literacy by 2026.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+                <article class="news-item">
+                    <div class="news-date">
+                        <span class="day">15</span>
+                        <span class="month">NOV</span>
+                    </div>
+                    <div class="news-content">
+                        <h4><a href="#">Public Notice: Passport Application System Maintenance</a></h4>
+                        <p>The Department of Passports announces scheduled downtime from Nov 18 (10 PM) to Nov 19 (6 AM) for a system upgrade.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+                
+                <article class="news-item">
+                    <div class="news-date">
+                        <span class="day">12</span>
+                        <span class="month">NOV</span>
+                    </div>
+                    <div class="news-content">
+                        <h4><a href="#">Tender Called for Kathmandu-Terai Fast Track Project</a></h4>
+                        <p>Bids are invited from qualified national and international firms for the construction of tunnel section 3B.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+            </main>
+            
+            <aside class="sidebar">
+                <div class="sidebar-widget">
+                    <h3><i class="fas fa-link"></i> Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-sitemap"></i> Ministry Directory</a></li>
+                        <li><a href="#"><i class="fas fa-download"></i> Download Forms</a></li>
+                        <li><a href="#"><i class="fas fa-gavel"></i> Public Tenders</a></li>
+                        <li><a href="#"><i class="fas fa-book-open"></i> Citizen Charter</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Holiday Calendar</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <h3><i class="fas fa-phone-alt"></i> Important Contacts</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Police Emergency: 100</a></li>
+                        <li><a href="#"><i class="fas fa-ambulance"></i> Ambulance: 102</a></li>
+                        <li><a href="#"><i class="fas fa-fire-extinguisher"></i> Fire Department: 101</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Grievance Hotline: 1111</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Have Your Say!</h2>
+            <p>Your feedback is vital for improving our services. Share your suggestions, file a grievance, or participate in public polls.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary"><i class="fas fa-comments"></i> Give Feedback</a>
+                <a href="#" class="btn btn-outline"><i class="fas fa-exclamation-circle"></i> File a Grievance</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h4>About Portal</h4>
+                    <p>This portal is a single-window access point for all government services. It aims to provide easy, efficient, and transparent services to citizens.</p>
+                    <div class="social-links" style="margin-top: 15px;">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-widget">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-universal-access"></i> Accessibility</a></li>
+                        <li><a href="#"><i class="fas fa-user-shield"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                        <li><a href="#"><i class="fas fa-sitemap"></i> Site Map</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-widget">
+                    <h4>Key Ministries</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home Affairs</a></li>
+                        <li><a href="#"><i class="fas fa-money-bill-wave"></i> Finance</a></li>
+                        <li><a href="#"><i class="fas fa-globe-asia"></i> Foreign Affairs</a></li>
+                        <li><a href="#"><i class="fas fa-heartbeat"></i> Health & Population</a></li>
+                        <li><a href="#"><i class="fas fa-school"></i> Education</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-widget">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Government of Nepal<br>Singha Durbar, Kathmandu</p>
+                        <p><i class="fas fa-envelope"></i> info@nepal.gov.np</p>
+                        <p><i class="fas fa-phone-alt"></i> +977-1-4200000</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Government of Nepal. All Rights Reserved. 🇳🇵</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('mobileNavToggle');
+        const mainNav = document.getElementById('mainNav');
+        const authButtonsDesktop = document.querySelector('.auth-buttons');
+        const authButtonsMobile = document.querySelector('.auth-buttons-mobile');
+
+        navToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            // Toggle visibility of login buttons for clean mobile view
+            if (mainNav.classList.contains('active')) {
+                authButtonsMobile.style.display = 'block'; // Show mobile auth
+            } else {
+                authButtonsMobile.style.display = 'none';
+            }
+        });
+        
+        // Hide mobile menu if window is resized while open
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                mainNav.classList.remove('active');
+                authButtonsMobile.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
